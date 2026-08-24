@@ -42,6 +42,19 @@
   touch-action: none;
 }
 
+/* Use the uploaded Mexsu artwork inside the existing compact brand slots. */
+span.grid.size-11.bg-amber-500 {
+  position: relative;
+  overflow: hidden;
+  color: transparent !important;
+  font-size: 0 !important;
+  background-color: #08111f !important;
+  background-image: url('./mexsulogo.jpg');
+  background-repeat: no-repeat;
+  background-size: 136px 76.5px;
+  background-position: 51% 48%;
+}
+
 @media (min-width: 1024px) {
   .mobile-nav-overlay { display: none !important; }
 }
