@@ -1,0 +1,51 @@
+/* Shared mobile navigation layer. The overlay is intentionally independent of the sticky header stack. */
+.mobile-nav-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  min-height: 100vh !important;
+  z-index: 2147483000 !important;
+  display: flex !important;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  visibility: visible;
+  background: #020617 !important;
+  opacity: 1 !important;
+  isolation: isolate;
+  transform: translateZ(0);
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-nav-overlay[hidden] {
+  display: none !important;
+}
+
+.mobile-nav-overlay .mobile-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: #020617;
+}
+
+.mobile-nav-overlay .mobile-nav-panel {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 100%;
+  background: #020617;
+}
+
+.mobile-nav-open {
+  overflow: hidden !important;
+  touch-action: none;
+}
+
+@media (min-width: 1024px) {
+  .mobile-nav-overlay { display: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav-overlay { scroll-behavior: auto; }
+}
