@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>İstanbul Acil Moto Kurye | Ortak Bileşen Referansı</title>
+  <meta name="description" content="İstanbul Acil Moto Kurye web sitesi için ortak responsive header, CTA, radar, mobil menü ve footer bileşenleri.">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            night: '#0b0f19',
+            panel: '#1e293b',
+            action: '#f59e0b',
+            call: '#ef4444',
+            wa: '#10b981'
+          },
+          boxShadow: {
+            glowAmber: '0 0 0 0 rgba(245, 158, 11, .55)',
+            glowRed: '0 0 0 0 rgba(239, 68, 68, .55)',
+            glowGreen: '0 0 0 0 rgba(16, 185, 129, .55)'
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #0b0f19;
+    }
+
+    .pulse-glow-amber,
+    .pulse-glow-red,
+    .pulse-glow-green {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .pulse-glow-amber::after,
+    .pulse-glow-red::after,
+    .pulse-glow-green::after {
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      border-radius: .5rem;
+      content: '';
+      animation: pulse-glow 2.2s ease-out infinite;
+    }
+
+    .pulse-glow-amber::after { box-shadow: 0 0 0 0 rgba(245, 158, 11, .6); }
+    .pulse-glow-red::after { box-shadow: 0 0 0 0 rgba(239, 68, 68, .6); }
+    .pulse-glow-green::after { box-shadow: 0 0 0 0 rgba(16, 185, 129, .6); }
+
+    @keyframes pulse-glow {
+      0%, 70%, 100% { opacity: .85; transform: scale(1); }
+      35% { opacity: 0; transform: scale(1.08); box-shadow: 0 0 0 10px transparent; }
+    }
+
+    .radar {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 7rem;
+      height: 7rem;
+      border: 1px solid rgba(16, 185, 129, .45);
+      border-radius: 9999px;
+      background: radial-gradient(circle, rgba(16, 185, 129, .2) 0 2px, transparent 3px 33%, rgba(16, 185, 129, .16) 34% 35%, transparent 36% 65%, rgba(16, 185, 129, .16) 66% 67%, transparent 68%);
+    }
+
+    .radar::before,
+    .radar::after {
+      position: absolute;
+      border: 1px solid #10b981;
+      border-radius: 9999px;
+      content: '';
+      animation: radar 2.6s ease-out infinite;
+    }
+
+    .radar::before { inset: 22%; }
+    .radar::after { inset: 0; animation-delay: 1.3s; }
+
+    .radar-sweep {
+      position: absolute;
+      inset: 50% 0 auto 50%;
+      width: 50%;
+      height: 1px;
+      transform-origin: left center;
+      background: linear-gradient(90deg, #10b981, transparent);
+      animation: radar-sweep 2.6s linear infinite;
+    }
+
+    @keyframes radar {
+      0% { opacity: .8; transform: scale(.25); }
+      100% { opacity: 0; transform: scale(1.35); }
+    }
+
+    @keyframes radar-sweep {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-night font-sans text-slate-100 antialiased">
+  <!-- Ortak Header: Sayfa yoluna göre href ve aria-current değerini güncelleyin. -->
+  <header class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur-md">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between gap-6 px-4 py-3 sm:px-6 lg:px-8" aria-label="Ana menü">
+      <a class="flex min-h-12 shrink-0 items-center gap-3" href="./index.html" aria-label="Acil Moto Kurye ana sayfa">
+        <span class="grid size-11 place-items-center rounded-lg bg-amber-500 text-xl font-extrabold text-slate-950" aria-hidden="true">AM</span>
+        <span class="leading-tight"><span class="block text-sm font-extrabold tracking-wide text-white sm:text-base">ACİL MOTO KURYE</span><span class="block text-xs font-medium text-amber-400">İstanbul'un hızlı çözümü</span></span>
+      </a>
+
+      <button id="menu-toggle" class="grid size-12 place-items-center rounded-lg border border-slate-700 text-slate-100 transition-all duration-200 hover:border-amber-400 hover:text-amber-400 active:scale-95 lg:hidden" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menüyü aç">
+        <svg class="size-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
+      </button>
+
+      <!-- Masaüstü menü -->
+      <div class="hidden items-center gap-8 lg:flex">
+        <div class="flex items-center gap-6"><a class="text-base font-semibold text-amber-400 border-b-2 border-amber-400 pb-1 transition-colors" href="./index.html" aria-current="page">Ana Sayfa</a><a class="text-base font-semibold text-slate-300 transition-colors hover:text-amber-400" href="./hizmetler.html">Hizmetlerimiz</a><a class="text-base font-semibold text-slate-300 transition-colors hover:text-amber-400" href="./kurye-cagir.html">Kurye Çağır</a><a class="text-base font-semibold text-slate-300 transition-colors hover:text-amber-400" href="./iletisim.html">İletişim</a></div>
+        <div class="flex items-center gap-3"><a class="pulse-glow-red inline-flex min-h-12 items-center gap-2 rounded-lg bg-rose-600 px-4 text-sm font-bold text-white transition-all duration-200 hover:bg-rose-500 active:scale-95" href="tel:05324807801"><span class="size-2 animate-pulse rounded-full bg-white" aria-hidden="true"></span>0532 480 78 01</a><a class="pulse-glow-green inline-flex min-h-12 items-center gap-2 rounded-lg bg-emerald-600 px-4 text-sm font-bold text-white transition-all duration-200 hover:bg-emerald-500 active:scale-95" href="https://wa.me/905324807801" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">◉</span>WhatsApp Kurye</a></div>
+      </div>
+    </nav>
+
+    <!-- Mobil tam ekran overlay menü -->
+    <div id="mobile-menu" class="fixed inset-0 z-50 hidden bg-slate-950 px-6 py-5" aria-hidden="true">
+      <div class="flex items-center justify-between"><a class="flex min-h-12 items-center gap-3" href="./index.html"><span class="grid size-11 place-items-center rounded-lg bg-amber-500 font-extrabold text-slate-950">AM</span><span class="font-extrabold text-white">ACİL MOTO KURYE</span></a><button id="menu-close" class="grid size-12 place-items-center rounded-lg border border-slate-700 text-2xl text-white transition-all duration-200 hover:border-amber-400 hover:text-amber-400 active:scale-95" type="button" aria-label="Menüyü kapat">×</button></div>
+      <div class="flex min-h-[calc(100vh-7rem)] flex-col justify-center gap-2"><a class="flex min-h-14 items-center border-b border-slate-800 text-2xl font-bold text-amber-400" href="./index.html">Ana Sayfa</a><a class="flex min-h-14 items-center border-b border-slate-800 text-2xl font-bold text-slate-200 hover:text-amber-400" href="./hizmetler.html">Hizmetlerimiz</a><a class="flex min-h-14 items-center border-b border-slate-800 text-2xl font-bold text-slate-200 hover:text-amber-400" href="./kurye-cagir.html">Kurye Çağır</a><a class="flex min-h-14 items-center border-b border-slate-800 text-2xl font-bold text-slate-200 hover:text-amber-400" href="./iletisim.html">İletişim</a><div class="mt-8 grid gap-3 sm:grid-cols-2"><a class="pulse-glow-red inline-flex min-h-14 items-center justify-center gap-2 rounded-lg bg-rose-600 px-4 font-bold text-white transition-all duration-200 hover:bg-rose-500 active:scale-95" href="tel:05324807801">● 0532 480 78 01 - Hemen Ara</a><a class="pulse-glow-green inline-flex min-h-14 items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 font-bold text-white transition-all duration-200 hover:bg-emerald-500 active:scale-95" href="https://wa.me/905324807801" target="_blank" rel="noopener noreferrer">◉ WhatsApp Kurye</a></div></div>
+    </div>
+  </header>
+
+  <!-- Referans içerik: Radar bileşenini canlı konum veya teslimat durumu alanında kullanın. -->
+  <main class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <section class="grid gap-10 rounded-2xl border border-slate-800 bg-slate-900/80 p-8 lg:grid-cols-[1fr_auto] lg:items-center"><div><p class="text-sm font-extrabold uppercase tracking-widest text-amber-400">Ortak bileşen referansı</p><h1 class="mt-3 max-w-3xl text-4xl font-extrabold leading-tight text-white sm:text-5xl">Koyu arayüz, güçlü kontrast, net aksiyon.</h1><p class="mt-5 max-w-2xl text-lg leading-8 text-slate-400">Bu alanı her sayfanın kendi içeriğiyle değiştirin. Header, CTA sınıfları, mobil menü, radar animasyonu ve footer yapısı ortak kalabilir.</p><div class="mt-8 flex flex-wrap gap-3"><a class="pulse-glow-amber inline-flex min-h-14 items-center justify-center rounded-lg bg-amber-500 px-6 font-bold text-slate-950 transition-all duration-200 hover:bg-amber-400 active:scale-95" href="./kurye-cagir.html">Kurye Çağır</a><a class="pulse-glow-red inline-flex min-h-14 items-center justify-center rounded-lg bg-rose-600 px-6 font-bold text-white transition-all duration-200 hover:bg-rose-500 active:scale-95" href="tel:05324807801">Hemen Ara</a></div></div><div class="flex flex-col items-center gap-4 rounded-xl border border-emerald-500/20 bg-slate-950 p-6"><div class="radar"><span class="radar-sweep" aria-hidden="true"></span><span class="relative z-10 size-3 rounded-full bg-emerald-400 shadow-[0_0_18px_6px_rgba(16,185,129,.45)]" aria-hidden="true"></span></div><p class="text-center text-sm font-bold text-emerald-400">Kurye ağı aktif</p></div></section>
+
+    <section class="mt-12 grid gap-4 sm:grid-cols-3"><div class="rounded-xl border border-slate-800 bg-slate-900/80 p-5"><p class="text-3xl font-extrabold text-amber-400">7/24</p><p class="mt-2 text-sm font-semibold text-slate-300">Ulaşılabilir acil hat</p></div><div class="rounded-xl border border-slate-800 bg-slate-900/80 p-5"><p class="text-3xl font-extrabold text-emerald-400">Canlı</p><p class="mt-2 text-sm font-semibold text-slate-300">Konum bilgilendirmesi</p></div><div class="rounded-xl border border-slate-800 bg-slate-900/80 p-5"><p class="text-3xl font-extrabold text-rose-400">Hızlı</p><p class="mt-2 text-sm font-semibold text-slate-300">İstanbul geneli teslimat</p></div></section>
+  </main>
+
+  <!-- Mobil Floating Action Bar -->
+  <div class="fixed inset-x-0 bottom-0 z-40 grid grid-cols-2 gap-2 border-t border-slate-800 bg-slate-900/95 p-3 backdrop-blur-md lg:hidden" role="navigation" aria-label="Hızlı iletişim"><a class="pulse-glow-red inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-rose-600 px-3 text-sm font-bold text-white transition-all duration-200 hover:bg-rose-500 active:scale-95" href="tel:05324807801">☎ Hemen Ara</a><a class="pulse-glow-green inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-emerald-600 px-3 text-sm font-bold text-white transition-all duration-200 hover:bg-emerald-500 active:scale-95" href="https://wa.me/905324807801" target="_blank" rel="noopener noreferrer">◉ WhatsApp'tan Çağır</a></div>
+
+  <!-- Ortak Footer: Hizmet bölgelerini SEO sayfalarına ayrı link olarak bağlayabilirsiniz. -->
+  <footer class="border-t border-slate-800 bg-slate-950 pb-24 pt-14 lg:pb-12"><div class="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8"><div><div class="flex items-center gap-3"><span class="grid size-11 place-items-center rounded-lg bg-amber-500 font-extrabold text-slate-950">AM</span><h2 class="font-extrabold text-white">Acil Moto Kurye</h2></div><p class="mt-4 text-sm leading-7 text-slate-400">Anadolu Yakası çıkışlı, İstanbul geneli ve Avrupa Yakası teslimatlı hızlı kurye hizmeti.</p></div><div><h2 class="text-sm font-bold uppercase tracking-wider text-amber-400">Hızlı Linkler</h2><ul class="mt-4 space-y-3 text-sm"><li><a class="text-slate-400 hover:text-amber-400" href="./index.html">Ana Sayfa</a></li><li><a class="text-slate-400 hover:text-amber-400" href="./hizmetler.html">Hizmetlerimiz</a></li><li><a class="text-slate-400 hover:text-amber-400" href="./kurye-cagir.html">Kurye Çağır</a></li><li><a class="text-slate-400 hover:text-amber-400" href="./iletisim.html">İletişim</a></li></ul></div><div><h2 class="text-sm font-bold uppercase tracking-wider text-amber-400">İstanbul İlçeleri</h2><p class="mt-4 text-sm leading-7 text-slate-400"><strong class="text-slate-300">Anadolu:</strong> Kadıköy, Üsküdar, Maltepe, Kartal, Ataşehir, Ümraniye, Pendik, Tuzla.<br><strong class="text-slate-300">Avrupa:</strong> Beşiktaş, Şişli, Fatih, Bakırköy, Avcılar ve çevresi.</p></div><div><h2 class="text-sm font-bold uppercase tracking-wider text-amber-400">7/24 Acil İletişim</h2><p class="mt-4 text-sm leading-7 text-slate-400">Gönderiniz beklemesin. Her saat ulaşılabiliriz.</p><a class="mt-4 inline-flex min-h-12 items-center gap-2 font-bold text-white hover:text-amber-400" href="tel:05324807801">☎ 0532 480 78 01</a><a class="mt-2 inline-flex min-h-12 items-center gap-2 font-bold text-emerald-400 hover:text-emerald-300" href="https://wa.me/905324807801" target="_blank" rel="noopener noreferrer">◉ WhatsApp'tan yazın</a></div></div><div class="mx-auto mt-12 max-w-7xl border-t border-slate-800 px-4 pt-6 text-xs text-slate-500 sm:px-6 lg:px-8">© 2026 Acil Moto Kurye. Tüm hakları saklıdır.</div></footer>
+
+  <script>
+    const menuToggle = document.querySelector('#menu-toggle');
+    const menuClose = document.querySelector('#menu-close');
+    const mobileMenu = document.querySelector('#mobile-menu');
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+
+    const setMenuState = (isOpen) => {
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+      mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+      mobileMenu.classList.toggle('hidden', !isOpen);
+      document.body.classList.toggle('overflow-hidden', isOpen);
+    };
+
+    menuToggle.addEventListener('click', () => setMenuState(true));
+    menuClose.addEventListener('click', () => setMenuState(false));
+    mobileLinks.forEach((link) => link.addEventListener('click', () => setMenuState(false)));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setMenuState(false);
+    });
+  </script>
+</body>
+</html>
